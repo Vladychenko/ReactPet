@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Формы в React</title>
+</head>
+<body>
+    <div id="app"></div>
+        
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+        
+    <script type="text/babel">
+    class UserForm extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {name: ""};
+   
+        this.onChange = this.onChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+      onChange(e) {
+        var val = e.target.value;
+        this.setState({name: val});
+    }
+   
+      handleSubmit(e) {
+        e.preventDefault();
+        alert("Name: " + this.state.name);
+      }
+   
+      render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <p>
+		    Логин: <br />
+		    <input name="login" type="text" size="25" maxlength="30" value={this.state.name} onChange={this.onChange}/> <br />
+		    Пароль: <br />
+		    <input name="pd" type="password" size="25" maxlength="30" /> <br />
+		    <input name="remember" type="checkbox" value="yes" /> Запомнить <br />
+		    <input type="submit" value="Send" />	
+                </p>
+                
+            </form>
+        );
+      }
+    }
+    ReactDOM.render(
+        <UserForm />,
+        document.getElementById("app")
+    )
+    </script>
+</body>
+</html>
