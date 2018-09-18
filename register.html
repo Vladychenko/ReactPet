@@ -12,9 +12,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-	
-
-
      <div id="app"></div>
         
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
@@ -31,37 +28,42 @@
         this.handleSubmit = this.handleSubmit.bind(this);
       }
       onChange(e) {
+
     }
    
       handleSubmit(e) {
         e.preventDefault();
         var login = this.refs.login.value;
-        var passw = this.refs.password.value;
-
-         fetch('http://localhost:5000/api/auth/signin/', {
+        var FullName = this.refs.FullName.value;
+        var Email = this.refs.Email.value;
+        var password = this.refs.password1.value;
+    
+        fetch('http://localhost:5000/api/auth/signup/', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
          },
         body: JSON.stringify({
-          usernameOrEmail:login,	
-          password:passw	
+          name:login,	
+          username:FullName,	
+          email:Email,	
+          password:password
         }),
         })  
         .then(function (data) {  
           
           switch(data.status) {
-            case 200:{
-               alert("Авторизация выполнена,добро пожаловать!"); 
+            case 201:{
+               alert("Регистрация выполнена,добро пожаловать!"); 
+               <Redirect to="http://localhost:3000" />
                break; 
             }
-            case 401:{
-              alert("Ошибка аторизации! "+data.message);  
+            case 400:{
+              alert("Ошибка! 400");  
               break; 
             }          
       }    
-      <Redirect to="http://localhost:3000" />
         console.log('Request succeeded with JSON response', data);  
       });
 
@@ -74,32 +76,46 @@
 <form class="form-horizontal" role="form" method="POST" onSubmit={this.handleSubmit}>
   <div class="form-group">
     <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
+    <label for="inputLogin" class="col-sm-4">Логин</label>
     <div class="col-sm-11">
       <input type="text" class="form-control" placeholder="Логин" name="login" ref="login"/>
     </div>
 </div>
 
-   <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
+
+ <div class="form-group">
+    <label for="inputFullName" class="col-sm-4">Полное имя</label>
     <div class="col-sm-11">
-      <input type="password" class="form-control" placeholder="Пароль" name="password" ref="password" />
+      <input type="text" class="form-control" placeholder="Полное имя" name="FullName" ref="FullName"/>
+    </div>
+</div>
+
+ <div class="form-group">
+    <label for="inputEmail" class="col-sm-4">Email</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" placeholder="Email" name="Email" ref="Email"/>
     </div>
 </div>
 
 
   <div class="form-group">
+    <label for="inputPassword1" class="col-sm-4">Пароль</label>
     <div class="col-sm-11">
-    <div class="row">
-      <div class="col-sm-6"><button type="submit" class="btn btn-default btn-sm">Войти</button></div>
-      <div align="right" class="col-sm-6"><a  href="register.html">Регистрация</a></div>
+      <input type="password" class="form-control" placeholder="Пароль" name="password1" ref="password1" />
     </div>
-      
-      
+</div>
+
+  <div class="form-group">
+    <label for="inputPassword2" class="col-sm-11">Подтверждение пароля</label>
+    <div class="col-sm-11">
+      <input type="password" class="form-control" placeholder="Подтверждение пароля" name="password2"  />
     </div>
-    
+</div>
 
-
+  <div class="form-group">
+    <div class="col-sm-11">
+      <button type="submit" class="btn btn-default btn-sm">Зарегестрировать</button>
+    </div>
   </div>  
 
   </div>
@@ -107,11 +123,6 @@
  
 </form>
 </div>
-
-
-
-
-
 
 
 
